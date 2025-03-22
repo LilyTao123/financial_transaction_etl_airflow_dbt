@@ -1,0 +1,14 @@
+[2025-03-20T17:04:36.484+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dimension_ingestion_gcs_dag.user_convert_to_parquet manual__2025-03-20T17:04:27.112271+00:00 [queued]>
+[2025-03-20T17:04:36.504+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dimension_ingestion_gcs_dag.user_convert_to_parquet manual__2025-03-20T17:04:27.112271+00:00 [queued]>
+[2025-03-20T17:04:36.505+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-03-20T17:04:36.532+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): user_convert_to_parquet> on 2025-03-20 17:04:27.112271+00:00
+[2025-03-20T17:04:36.544+0000] {standard_task_runner.py:57} INFO - Started process 10302 to run task
+[2025-03-20T17:04:36.553+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'dimension_ingestion_gcs_dag', 'user_convert_to_parquet', 'manual__2025-03-20T17:04:27.112271+00:00', '--job-id', '152', '--raw', '--subdir', 'DAGS_FOLDER/etl_ingest_tables.py', '--cfg-path', '/tmp/tmpwkbkg2o7']
+[2025-03-20T17:04:36.561+0000] {standard_task_runner.py:85} INFO - Job 152: Subtask user_convert_to_parquet
+[2025-03-20T17:04:36.659+0000] {task_command.py:415} INFO - Running <TaskInstance: dimension_ingestion_gcs_dag.user_convert_to_parquet manual__2025-03-20T17:04:27.112271+00:00 [running]> on host 2c8eeef746cb
+[2025-03-20T17:04:36.828+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='dimension_ingestion_gcs_dag' AIRFLOW_CTX_TASK_ID='user_convert_to_parquet' AIRFLOW_CTX_EXECUTION_DATE='2025-03-20T17:04:27.112271+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-03-20T17:04:27.112271+00:00'
+[2025-03-20T17:04:36.939+0000] {ingest_dimension.py:20} INFO - Saved file to /opt/***/temp_data/dimension/user/user.parquet
+[2025-03-20T17:04:36.940+0000] {python.py:194} INFO - Done. Returned value was: None
+[2025-03-20T17:04:36.962+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=dimension_ingestion_gcs_dag, task_id=user_convert_to_parquet, execution_date=20250320T170427, start_date=20250320T170436, end_date=20250320T170436
+[2025-03-20T17:04:37.008+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-03-20T17:04:37.059+0000] {taskinstance.py:2784} INFO - 1 downstream tasks scheduled from follow-on schedule check

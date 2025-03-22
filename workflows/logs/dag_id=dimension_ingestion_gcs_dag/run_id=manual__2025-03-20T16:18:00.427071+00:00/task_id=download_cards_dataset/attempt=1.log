@@ -1,0 +1,16 @@
+[2025-03-20T16:18:18.355+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dimension_ingestion_gcs_dag.download_cards_dataset manual__2025-03-20T16:18:00.427071+00:00 [queued]>
+[2025-03-20T16:18:18.381+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dimension_ingestion_gcs_dag.download_cards_dataset manual__2025-03-20T16:18:00.427071+00:00 [queued]>
+[2025-03-20T16:18:18.382+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-03-20T16:18:18.409+0000] {taskinstance.py:1382} INFO - Executing <Task(BashOperator): download_cards_dataset> on 2025-03-20 16:18:00.427071+00:00
+[2025-03-20T16:18:18.422+0000] {standard_task_runner.py:57} INFO - Started process 9631 to run task
+[2025-03-20T16:18:18.432+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'dimension_ingestion_gcs_dag', 'download_cards_dataset', 'manual__2025-03-20T16:18:00.427071+00:00', '--job-id', '130', '--raw', '--subdir', 'DAGS_FOLDER/etl_ingest_tables.py', '--cfg-path', '/tmp/tmpxl9zxa_4']
+[2025-03-20T16:18:18.440+0000] {standard_task_runner.py:85} INFO - Job 130: Subtask download_cards_dataset
+[2025-03-20T16:18:18.579+0000] {task_command.py:415} INFO - Running <TaskInstance: dimension_ingestion_gcs_dag.download_cards_dataset manual__2025-03-20T16:18:00.427071+00:00 [running]> on host 2c8eeef746cb
+[2025-03-20T16:18:18.773+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='dimension_ingestion_gcs_dag' AIRFLOW_CTX_TASK_ID='download_cards_dataset' AIRFLOW_CTX_EXECUTION_DATE='2025-03-20T16:18:00.427071+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-03-20T16:18:00.427071+00:00'
+[2025-03-20T16:18:18.780+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-03-20T16:18:18.782+0000] {subprocess.py:75} INFO - Running command: ['/bin/bash', '-c', 'curl -sSL https://github.com/LilyTao123/financial-transaction-data/releases/download/card/cards_data.csv > /opt/***/temp_data/dimension/cards/cards.csv']
+[2025-03-20T16:18:18.819+0000] {subprocess.py:86} INFO - Output:
+[2025-03-20T16:18:19.293+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2025-03-20T16:18:19.349+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=dimension_ingestion_gcs_dag, task_id=download_cards_dataset, execution_date=20250320T161800, start_date=20250320T161818, end_date=20250320T161819
+[2025-03-20T16:18:19.422+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-03-20T16:18:19.474+0000] {taskinstance.py:2784} INFO - 1 downstream tasks scheduled from follow-on schedule check
