@@ -14,7 +14,9 @@ user_dtype_mapping = {'id': 'int32',
     'yearly_income': 'float32',
     'total_debt': 'float32',
     'credit_score': 'int32',
-    'num_credit_cards': 'int32'}
+    'num_credit_cards': 'int32',
+    'city': 'string',
+    'state': 'string'}
 
 
 cards_dtype_mapping = {
@@ -23,12 +25,12 @@ cards_dtype_mapping = {
     'card_brand': 'string',
     'card_type': 'string',
     'card_number': 'string',
-    'expires': 'datetime64[ns]',
+    'expires': 'string',
     'cvv': 'int32',
     'has_chip': 'string',
     'num_cards_issued': 'int32',
     'credit_limit': 'float32',
-    'acct_open_date': 'datetime64[ns]',
+    'acct_open_date': 'string',
     'year_pin_last_changed': 'int32',
     'card_on_dark_web': 'string'
 }
