@@ -1,20 +1,22 @@
 variable "credentials" {
   description = "My Credentials"
   default     = "./workflows/.keys/google_cloud/google_creds.json"
-  #ex: if you have a directory where this file is called keys with your service account json file
-  #saved there as my-creds.json you could use default = "./keys/my-creds.json"
 }
-
 
 variable "project" {
   description = "Project"
   default     = "finance-transaction"
 }
 
+variable "project_service_account_id" {
+  description = "value"
+  default = "finance-trans-service-account"
+}
+
 variable "region" {
   description = "Region"
   #Update the below to your desired region
-  default     = "eu-central1"
+  default     = "europe-west2-a"
 }
 
 variable "location" {
@@ -23,19 +25,17 @@ variable "location" {
   default     = "EU"
 }
 
-variable "bq_dataset_name" {
-  description = "My BigQuery Dataset Name"
-  #Update the below to what you want your dataset to be called
-  default     = "financial_transaction"
-}
-
-variable "gcs_bucket_name" {
-  description = "My Storage Bucket Name"
-  #Update the below to a unique bucket name
-  default     = "financial_transaction-bucket"
-}
-
 variable "gcs_storage_class" {
   description = "Bucket Storage Class"
   default     = "STANDARD"
+}
+
+variable "vm_instance" {
+  description = "Name of VM Instance"
+  default     = "finance-transaction-vm"
+}
+
+variable "machine_type" {
+  description = "VM machine type"
+  default     = "e2-standard-4"
 }

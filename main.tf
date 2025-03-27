@@ -7,15 +7,19 @@ terraform {
   }
 }
 
+locals {
+  envs = { for tuple in regexall("(.*)=(.*)", file(".env")) : tuple[0] => sensitive(tuple[1]) }
+}
+
 provider "google" {
   credentials = file(var.credentials)
-  project     = var.project
+  project     = local.envs["GCP_PROJECT_ID"]
   region      = var.region
 }
 
 
 resource "google_storage_bucket" "financial-transaction-bucket" {
-  name          = var.gcs_bucket_name
+  name          = local.envs["GCP_GCS_BUCKET"]
   location      = var.location
   force_destroy = true
 
@@ -31,40 +35,45 @@ resource "google_storage_bucket" "financial-transaction-bucket" {
 }
 
 
-
 resource "google_bigquery_dataset" "financial_transaction_dataset" {
-  dataset_id = var.bq_dataset_name
+  dataset_id = local.envs["GCP_BIGQUERY_DATASET"]
   location   = var.location
 }
 
-resource "google_project_service" "cloud_run_api" {
-  service = "run.googleapis.com"
-}
+# resource "google_project_service" "cloud_run_api" {
+#   project = local.envs["GCP_PROJECT_ID"]
+#   service = "compute.googleapis.com"
+# }
 
-resource "google_cloud_run_service" "renderer" {
-  name     = "renderer"
-  location = var.location
+# resource "google_project_service" "cloud_run_api" {
+#   project = local.envs["GCP_PROJECT_ID"]
+#   service = "run.googleapis.com"
+# }
 
-  template {
-    spec {
-      containers {
-        image = "gcr.io/${var.project}/renderer:latest"
-      }
-    }
-  }
+# resource "google_cloud_run_service" "renderer" {
+#   name     = "renderer"
+#   location = var.location
 
-  depends_on = [
-    google_project_service.cloud_run_api
-  ]
-}
+#   template {
+#     spec {
+#       containers {
+#         image = "gcr.io/${var.project}/renderer:latest"
+#       }
+#     }
+#   }
 
-resource "google_compute_instance" "financa-transaction-vm" {
+#   depends_on = [
+#     google_project_service.cloud_run_api
+#   ]
+# }
+
+resource "google_compute_instance" "financa_transaction_vm" {
   name         = var.vm_instance
   machine_type = var.machine_type
   zone         = var.region
 
   service_account {
-    email  = "${var.airflow_service_account_id}@${var.project}.iam.gserviceaccount.com"
+    email  = "${var.project_service_account_id}@${var.project}.iam.gserviceaccount.com"
     scopes = [
       "userinfo-email",
       "compute-ro",

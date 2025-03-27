@@ -45,6 +45,7 @@ x-airflow-common:
     GCP_PROJECT_ID: "${GCP_PROJECT_ID}"
     GCP_GCS_BUCKET: "${GCP_GCS_BUCKET}"
     GCP_BIGQUERY_DATASET: "${GCP_BIGQUERY_DATASET}"
+    
   networks:
    - airflow-finance-transaction-analytics-network
 
@@ -65,6 +66,7 @@ x-airflow-common:
       condition: service_healthy
     postgres:
       condition: service_healthy
+    
 
 services:
   postgres:
@@ -306,3 +308,4 @@ volumes:
 
 networks:
   airflow-finance-transaction-analytics-network:
+    driver: bridge

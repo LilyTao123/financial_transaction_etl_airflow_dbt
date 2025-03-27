@@ -6,7 +6,7 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python_operator import PythonOperator
 
-from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExternalTableOperator
+from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator, BigQueryCreateExternalTableOperator
 from airflow.providers.google.cloud.operators.gcs import GCSListObjectsOperator
 
 from airflow.contrib.operators.spark_submit_operator import SparkSubmitOperator
@@ -17,6 +17,7 @@ sys.path.append(parent_directory)
 
 from common.file_config import *
 from common.schema import *
+from common.bq_queries import *
 from ingest_dimension import *
 from gcp_operations import *
 
@@ -129,8 +130,29 @@ with DAG(
         },
     )
 
+    bq_user_table = BigQueryInsertJobOperator(
+        task_id='bq_user_table',
+        configuration={
+            'query': {
+                'query': create_user_table_query,
+                'useLegacySql': False,
+            }
+        },
+    )
+
+    bq_cards_table = BigQueryInsertJobOperator(
+        task_id='bq_cards_table',
+        configuration={
+            'query': {
+                'query': create_cards_table_query,
+                'useLegacySql': False,
+            }
+        },
+    )
+
+
 
     create_temp_folder >> [ 
-    create_temp_folder >> download_user_dataset >> user_convert_to_parquet >> user_load_to_gcp >> bq_create_user_external_table,  
-    create_temp_folder >> download_cards_dataset >> cards_convert_to_parquet >> cards_load_to_gcp >> bq_create_cards_external_table 
+    create_temp_folder >> download_user_dataset >> user_convert_to_parquet >> user_load_to_gcp >> bq_create_user_external_table >> bq_user_table,
+    create_temp_folder >> download_cards_dataset >> cards_convert_to_parquet >> cards_load_to_gcp >> bq_create_cards_external_table >> bq_cards_table
 ]

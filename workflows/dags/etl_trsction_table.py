@@ -6,7 +6,7 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python_operator import PythonOperator
 
-from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExternalTableOperator
+from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator, BigQueryCreateExternalTableOperator
 from airflow.providers.google.cloud.operators.gcs import GCSListObjectsOperator
 from airflow.providers.google.cloud.sensors.gcs import GCSObjectExistenceSensor
 
@@ -17,6 +17,7 @@ parent_directory = os.path.dirname(os.path.dirname(current_file_path))
 sys.path.append(parent_directory)
 
 from common.file_config import *
+from common.bq_queries import *
 from gcp_operations import *
 from ingest_dimension import download_dataset
 
@@ -104,4 +105,14 @@ with DAG(
         },
     )
 
-create_temp_folder >> download_trsction_dataset >> trsction_convert_to_parquet >> trsction_load_to_gcp >> bq_create_trsnction_external_table
+    bq_partitioned_transaction_records = BigQueryInsertJobOperator(
+        task_id='bq_partitioned_transaction_records',
+        configuration={
+            'query': {
+                'query': create_partitioned_transaction_table_query,
+                'useLegacySql': False,
+            }
+        },
+    )
+
+create_temp_folder >> download_trsction_dataset >> trsction_convert_to_parquet >> trsction_load_to_gcp >> bq_create_trsnction_external_table >> bq_partitioned_transaction_records

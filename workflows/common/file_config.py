@@ -29,7 +29,8 @@ user_local_ings = f'{user_local_path}/{user_local_ings_name}'
 user_local_trgt = f'{user_local_path}/{user_local_trgt_name}'
 user_gcs_trgt = f'{user_gcs_prefix}/{user_local_trgt_name}'
 
-bq_external_user = 'user'
+bq_external_user = 'external_user'
+bq_user = 'user'
 
 # cards
 cards_local_ings_name = f'cards.{ings_file_type}'
@@ -41,7 +42,8 @@ cards_local_ings = f'{cards_local_path}/{cards_local_ings_name}'
 cards_local_trgt = f'{cards_local_path}/{cards_local_trgt_name}'
 cards_gcs_trgt = f'{dimension_path}/cards/{cards_local_trgt_name}'
 
-bq_external_cards = 'cards'
+bq_external_cards = 'external_cards'
+bq_cards = 'cards'
 
 # transaction
 trnsction_table_name = config['trnsction']['igst_table_name']
@@ -55,6 +57,7 @@ trsction_local_ings = f'{trsction_local_path}/{trsction_local_ings_name}'
 trsction_local_trgt = f'{trsction_local_path}/{trsction_local_trgt_name}'
 trsction_gcs_trgt = f'trnsction/{trsction_local_trgt_name}'
 
-bq_external_trsnction = 'trnsction'
+bq_external_trsnction = 'external_trnsction'
+bq_trsnction = 'trnsction'
 
 # BigQuery file setting 

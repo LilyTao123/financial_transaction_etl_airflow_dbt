@@ -1,7 +1,7 @@
 import pyspark
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as funcs
-from pyspark.sql.functions import md5, concat, col, coalesce, lit, regexp_replace
+from pyspark.sql.functions import md5, concat, col, coalesce, lit, regexp_replace, to_timestamp
 import logging
 
 import os 
@@ -32,7 +32,12 @@ trsction = trsction.fillna({'errors': 'unknown',
                             'merchant_state': 'unknown',
                             'merchant_city': 'unknown'})
 
-trsction = trsction.withColumn("amount", regexp_replace("amount", "\\$", ""))
+# redefine column date as date format
+trsction = trsction.withColumn("amount", regexp_replace("amount", "\\$", "")) \
+                   .withColumn("transaction_date", to_timestamp(col("date"), "yyyy-MM-dd HH:mm:ss")) \
+                   .withColumnRenamed('date', 'transaction_time')
+
+logger.info(f'{trsction.columns}')
 
 trsction.write.parquet(f'{trsction_local_trgt}', mode='overwrite') 
 logger.info(f'It is stored into {trsction_local_trgt}')

@@ -5,7 +5,7 @@ local_path: temp_data
 dimension_path: dimension
 
 user:
-  url: https://github.com/LilyTao123/financial-transaction-data/releases/download/users/users_data.csv
+  url: https://github.com/LilyTao123/financial-transaction-data/releases/download/users/output_users.csv
   table_name: user
 
 cards:
