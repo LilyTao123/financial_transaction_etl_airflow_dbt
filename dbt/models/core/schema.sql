@@ -29,7 +29,7 @@ models:
 
   - name: clients_consumption_2019
     description: ""
-    columns:
+
   - name: transaction_fact
     description: "It combines tables user, cards and transactions together"
     columns:
