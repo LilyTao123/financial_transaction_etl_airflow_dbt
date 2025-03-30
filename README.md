@@ -26,7 +26,14 @@ All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded i
 ## clone git repository
 ## Create GCP service account and credential keys
 ### a. service account
-
+``` 
+  - BigQuery Admin
+  - Compute Admin
+  - Project IAM Admin
+  - Service Account Admin
+  - Service Account User
+  - Storage Admin
+``` 
 ### b. credential keys
 
 ### c. rename and save it
