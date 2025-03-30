@@ -30,6 +30,7 @@ All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded i
 ### b. credential keys
 
 ### c. rename and save it
+save and rename the keys as 'airflow-etl/.keys/google_cloud/google_creds.json'
 
 ## Update .env
 
