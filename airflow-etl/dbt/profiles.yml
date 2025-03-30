@@ -1,0 +1,12 @@
+# profiles.yml
+default:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: "{{ env_var('GCP_PROJECT_ID') }}"  # Use environment variable for project ID
+      dataset: "{{ env_var('GCP_BIGQUERY_DATASET') }}"    # Use environment variable for dataset
+      threads: 1
+      keyfile: "/.keys/google_cloud/google_creds.json"  # Use environment variable for keyfile path
+      location: EU  # Set your BigQuery location
