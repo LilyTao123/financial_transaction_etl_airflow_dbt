@@ -40,6 +40,11 @@ All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded i
 save and rename the keys as 'airflow-etl/.keys/google_cloud/google_creds.json'
 
 ## Update .env
+```  
+GCP_PROJECT_ID=<your project id>
+GCP_GCS_BUCKET=<the bucket you want to create>
+GCP_BIGQUERY_DATASET=<the dataset you want to create>
+```
 
 ## Set up Terraform
 1. initialise terraform
