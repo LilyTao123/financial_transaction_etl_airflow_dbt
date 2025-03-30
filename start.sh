@@ -1,36 +1,67 @@
-#!/bin/bash
+# 1. Create a folyesr named uk_power_analytics
+sudo mkdir -p finance_transaction
 
-# Exit immediately if any command fails
-set -e
+# 2. Install Git and Docker Compose
 
-echo "🚀 Starting Airflow & dbt environment..."
+sudo apt-get update
+sudo sudo apt-get install git
 
-# Navigate to project directory
-cd "$(dirname "$0")"
+# Add Docker's official GPG key:
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-# Ensure Docker is installed
-if ! command -v docker &> /dev/null; then
-    echo "❌ Docker is not installed. Installing now..."
-    sudo apt update -y
-    sudo apt install -y docker.io docker-compose
-    sudo systemctl enable docker
-    sudo systemctl start docker
-    sudo usermod -aG docker $USER
-    echo "✅ Docker installed successfully. Please log out and back in for group changes to take effect."
-    exit 1
-fi
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
 
-# Export Google Cloud credentials for BigQuery
-export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/gcp-key.json"
+yes | sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-# Start Docker Compose (Airflow + dbt)
-echo "🐳 Starting Docker containers..."
-docker-compose up -d
+# 3. Git clone a GitHub repo
+git clone https://github.com/lilychau1/uk-power-analytics.git uk_power_analytics
 
-# Check running containers
-echo "📦 Running containers:"
-docker ps
+# 4. Create service account key
+PROJECT_ID=$(gcloud config get-value project)
+SERVICE_ACCOUNT_EMAIL="${AIRFLOW_SERVICE_ACCOUNT_ID}@$PROJECT_ID.iam.gserviceaccount.com"
+GOOGLE_CREDENTIAL_FOLDER="uk_power_analytics/airflow_workflows/.google"
+GOOGLE_CREDENTIAL_PATH="credentials/google_credentials.json"
 
-echo "✅ Airflow is running at http://$(hostname -I | awk '{print $1}'):8080"
-echo "📜 To check logs, use: docker-compose logs -f"
-echo "📌 To stop everything, use: ./stop.sh"
+gcloud iam service-accounts keys create "$GOOGLE_CREDENTIAL_FOLDER/$GOOGLE_CREDENTIAL_PATH" --iam-account="$SERVICE_ACCOUNT_EMAIL"
+chmod -R 755 "$GOOGLE_CREDENTIAL_FOLDER"
+chmod 644 "$GOOGLE_CREDENTIAL_FOLDER/$GOOGLE_CREDENTIAL_PATH"
+
+# 5. Get environment variables: GCP_PROJECT_ID, AIRFLOW_UID, _PIP_ADDITIONAL_REQUIREMENTS
+export GCP_PROJECT_ID=$(curl "http://metadata.google.internal/computeMetadata/v1/instance/attributes/GCP_PROJECT_ID" -H "Metadata-Flavor: Google")
+export GCP_GCS_BUCKET="$GCP_PROJECT_ID-${GCS_BUCKET_SUFFIX}"
+export AIRFLOW_UID=$(curl "http://metadata.google.internal/computeMetadata/v1/instance/attributes/AIRFLOW_UID" -H "Metadata-Flavor: Google")
+export _PIP_ADDITIONAL_REQUIREMENTS=$(curl "http://metadata.google.internal/computeMetadata/v1/instance/attributes/_PIP_ADDITIONAL_REQUIREMENTS" -H "Metadata-Flavor: Google")
+
+# 6. Write environment variables to .env file
+echo "GCP_PROJECT_ID=$GCP_PROJECT_ID" > uk_power_analytics/airflow_workflows/.env
+echo "GCP_GCS_BUCKET=$GCP_GCS_BUCKET" >> uk_power_analytics/airflow_workflows/.env
+echo "AIRFLOW_UID=$AIRFLOW_UID" >> uk_power_analytics/airflow_workflows/.env
+echo "_PIP_ADDITIONAL_REQUIREMENTS=$_PIP_ADDITIONAL_REQUIREMENTS" >> uk_power_analytics/airflow_workflows/.env
+
+# 7. Create folders for proper volume mounting
+cd uk_power_analytics/airflow_workflows
+
+mkdir -p power_data/initialise/bmrs_generation
+mkdir -p power_data/initialise/bmrs_capacity
+mkdir -p power_data/batch/bmrs_generation
+mkdir -p power_data/batch/bmrs_capacity
+
+# 8. Set permissions
+# Change group ownership
+chown -R "$(whoami)" dags logs plugins power_data
+# Grant write permissions to the group
+chmod -R g+w dags logs plugins power_data
+
+# 9. Build docker image
+docker build --no-cache -t airflow-uk-power-analytics .
+
+# 10. Build containers
+docker compose up

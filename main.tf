@@ -40,6 +40,11 @@ resource "google_bigquery_dataset" "financial_transaction_dataset" {
   location   = var.location
 }
 
+resource "google_bigquery_dataset" "financial_transaction_dataset" {
+  dataset_id = local.envs["GCP_BIGQUERY_DATASET"]
+  location   = var.location
+}
+
 # resource "google_project_service" "cloud_run_api" {
 #   project = local.envs["GCP_PROJECT_ID"]
 #   service = "compute.googleapis.com"
