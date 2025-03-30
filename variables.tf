@@ -3,10 +3,6 @@ variable "credentials" {
   default     = "./workflows/.keys/google_cloud/google_creds.json"
 }
 
-variable "project" {
-  description = "Project"
-  default     = "finance-transaction"
-}
 
 variable "project_service_account_id" {
   description = "value"

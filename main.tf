@@ -40,11 +40,6 @@ resource "google_bigquery_dataset" "financial_transaction_dataset" {
   location   = var.location
 }
 
-resource "google_bigquery_dataset" "financial_transaction_dataset" {
-  dataset_id = local.envs["GCP_BIGQUERY_DATASET"]
-  location   = var.location
-}
-
 # resource "google_project_service" "cloud_run_api" {
 #   project = local.envs["GCP_PROJECT_ID"]
 #   service = "compute.googleapis.com"
@@ -72,30 +67,30 @@ resource "google_bigquery_dataset" "financial_transaction_dataset" {
 #   ]
 # }
 
-resource "google_compute_instance" "financa_transaction_vm" {
-  name         = var.vm_instance
-  machine_type = var.machine_type
-  zone         = var.region
+# resource "google_compute_instance" "financa_transaction_vm" {
+#   name         = var.vm_instance
+#   machine_type = var.machine_type
+#   zone         = var.region
 
-  service_account {
-    email  = "${var.project_service_account_id}@${var.project}.iam.gserviceaccount.com"
-    scopes = [
-      "userinfo-email",
-      "compute-ro",
-      "storage-full",
-      "https://www.googleapis.com/auth/iam",
-      "https://www.googleapis.com/auth/cloud-platform"
-    ]
-  }
+#   service_account {
+#     email  = "${var.project_service_account_id}@${local.envs["GCP_PROJECT_ID"]}.iam.gserviceaccount.com"
+#     scopes = [
+#       "userinfo-email",
+#       "compute-ro",
+#       "storage-full",
+#       "https://www.googleapis.com/auth/iam",
+#       "https://www.googleapis.com/auth/cloud-platform"
+#     ]
+#   }
 
-  boot_disk {
-    initialize_params {
-      image = "ubuntu-2004-focal-v20250213"
-    }
-  }
+#   boot_disk {
+#     initialize_params {
+#       image = "ubuntu-2004-focal-v20250213"
+#     }
+#   }
 
-  network_interface {
-    network = "default"
-    access_config {}
-  }
-}
+#   network_interface {
+#     network = "default"
+#     access_config {}
+#   }
+# }
