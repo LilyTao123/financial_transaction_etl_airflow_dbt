@@ -26,7 +26,8 @@ All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded i
 ## clone git repository
 ## Create GCP service account and credential keys
 ### a. service account
-``` 
+create a service account: IAM and admin -> service accounts -> click 'service account', and include the below permissions
+```
   - BigQuery Admin
   - Compute Admin
   - Project IAM Admin
@@ -35,6 +36,7 @@ All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded i
   - Storage Admin
 ``` 
 ### b. credential keys
+create credential key under the service account
 
 ### c. rename and save it
 save and rename the keys as 'airflow-etl/.keys/google_cloud/google_creds.json'
