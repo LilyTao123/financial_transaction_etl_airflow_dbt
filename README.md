@@ -7,7 +7,7 @@ This dataset is sourced from [Kaggle](https://www.kaggle.com/datasets/computingv
 For example, the original dataset includes 'latitude' and 'longitude' coordinates. I have used this data to determine users' locations at the state and city levels, and created a new column.
 
 # Technology
-![workflow][media/airflow.png]
+![workflow][media/workflows.png]
 # ETL Process Design
 Airflow is used to initally ingest and initially transform data, the ingested data include:
 1. transaction_data
