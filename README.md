@@ -49,8 +49,8 @@ save and rename the keys as under airflow-etl, the path of it should be 'airflow
 ## Update .env
 ```  
 GCP_PROJECT_ID=<your project id>
-GCP_GCS_BUCKET=<the bucket you want to create>
-GCP_BIGQUERY_DATASET=<the dataset you want to create>
+GCP_GCS_BUCKET=financial_transaction_bucket
+GCP_BIGQUERY_DATASET=financial_transaction
 AIRFLOW_UID=1001
 ```
 
