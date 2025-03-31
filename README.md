@@ -76,6 +76,7 @@ open ```http://localhost:8080 ``` in your browser
 ![airflow log in](media/airflowlogin.png)
 ### Add spark connection
 In the top navigation bar, go to Admin > Connections > + > Fill in the following: Connection Id: 'spark-conn' Connection Type: 'spark' Host: 'spark://spark-master' Port: '7077'
+![airflow_spark_conn](media/spark.png)
 ### Run dags as follow orders
 dimension_ingestion_gcs_dag >> trnsaction_ingestion_gcs_dag >> dbt_run_job
 After it runs successfully, you will observe the following:
