@@ -52,6 +52,7 @@ AIRFLOW_UID=1001
 ```
 
 ## copy .env file into airflow-etl
+Remember you need to copy .env into folder airflow-etl
 
 ## Set up Terraform
 1. initialise terraform
