@@ -7,12 +7,11 @@ This dataset is sourced from [Kaggle](https://www.kaggle.com/datasets/computingv
 For example, the original dataset includes 'latitude' and 'longitude' coordinates. I have used this data to determine users' locations at the state and city levels, and created a new column.
 
 # Technology
-
+![workflow](media/workflows.png)
 # ETL Process Design
 Airflow is used to initally ingest and initially transform data, the ingested data include:
-1. transaction_data
-2. user_data
-3. cards_data
+transaction, user, cards, mcc  
+And table 'transaction' is partitioned by transaction_date  
 
 DBT combined different dataset, and created a table clients_consumption_2019 and online_trsn_over_time to build dashboard.  
 clients_consumption_2019 is an aggregated view that describes customers consumption in 2019, including how many transaction they made, how much they consumed, and where
