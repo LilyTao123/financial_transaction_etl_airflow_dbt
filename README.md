@@ -73,6 +73,7 @@ docker-compose up
 
 ## Access to airflow
 open ```http://localhost:8080 ``` in your browser
+![airflow log in](media/airflowlogin.png)
 ### Add spark connection
 In the top navigation bar, go to Admin > Connections > + > Fill in the following: Connection Id: 'spark-conn' Connection Type: 'spark' Host: 'spark://spark-master' Port: '7077'
 ### Run dags as follow orders
