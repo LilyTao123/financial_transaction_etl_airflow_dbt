@@ -96,4 +96,4 @@ After it runs successfully, you will observe the following:
 ``` terraform destroy ```
 
 # Data Visualisation
-
+![workflow](media/dashboard.png)
