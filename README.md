@@ -93,6 +93,9 @@ To explore airflow dags, you will see
 ![workflow](media/airflow_dags.png)
 
 And you need to run them in the following order: dimension_ingestion_gcs_dag >> trnsaction_ingestion_gcs_dag >> dbt_run_job  
+To run then, click the triangle in the right-top corner
+![workflow](media/run_dag.png)
+
 After they run successfully, you will observe the following:
 1. New GCS bucket named <your-project-id>-financial_transaction_bucket:  
 gs://your-bucket-name/    
