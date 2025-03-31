@@ -80,15 +80,15 @@ In the top navigation bar, go to Admin > Connections > + > Fill in the following
 ### Run dags as follow orders
 dimension_ingestion_gcs_dag >> trnsaction_ingestion_gcs_dag >> dbt_run_job
 After it runs successfully, you will observe the following:
-1. New GCS bucket named <your-project-id>-finance_transaction:  
+1. New GCS bucket named <your-project-id>-financial_transaction_bucket:  
   user_data.parquet  
   cards_data.parquet  
   transaction_data.parquet  
-2. New tables in your GCS BigQuery dataset financial_transaction_bucket:
+2. New tables in your GCS BigQuery dataset financial_transaction:
   user
   cards    
   trnsction
-3. New tables in your GCS BigQuery dataset financial_transaction:
+3. New tables in your GCS BigQuery dataset financial_transaction_transformed_data:
   clients_consumption_2019  
   online_trsn_over_time  
 ## Destroy resources
