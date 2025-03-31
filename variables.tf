@@ -1,6 +1,6 @@
 variable "credentials" {
   description = "My Credentials"
-  default     = "./workflows/.keys/google_cloud/google_creds.json"
+  default     = "./airflow-etl/.keys/google_cloud/google_creds.json"
 }
 
 
