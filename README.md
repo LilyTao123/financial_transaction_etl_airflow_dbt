@@ -24,6 +24,7 @@ All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded i
 
 # Get started
 ## clone git repository
+``` git clone  ```
 ## Create GCP service account and credential keys
 ### a. service account
 create a service account: IAM and admin -> service accounts -> click 'service account', and include the below permissions
