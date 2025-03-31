@@ -36,14 +36,14 @@ resource "google_storage_bucket" "financial-transaction-bucket" {
 
 
 resource "google_bigquery_dataset" "financial_transaction_dataset" {
-  dataset_id = local.envs["GCP_BIGQUERY_DATASET"]
-  location   = var.location
+  dataset_id                 = local.envs["GCP_BIGQUERY_DATASET"]
+  location                   = var.location
   delete_contents_on_destroy = true
 }
 
 resource "google_bigquery_dataset" "financial_transaction_dataset_dbt" {
-  dataset_id = "financial_transaction_transformed_data"
-  location   = var.location
+  dataset_id                 = "financial_transaction_transformed_data"
+  location                   = var.location
   delete_contents_on_destroy = true
 }
 

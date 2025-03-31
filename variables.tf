@@ -6,19 +6,19 @@ variable "credentials" {
 
 variable "project_service_account_id" {
   description = "value"
-  default = "finance-trans-service-account"
+  default     = "finance-trans-service-account"
 }
 
 variable "region" {
   description = "Region"
   #Update the below to your desired region
-  default     = "europe-west2-a"
+  default = "europe-west2-a"
 }
 
 variable "location" {
   description = "Project Location"
   #Update the below to your desired location
-  default     = "EU"
+  default = "EU"
 }
 
 variable "gcs_storage_class" {
