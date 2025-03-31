@@ -92,15 +92,13 @@ In the top navigation bar, go to Admin > Connections > + > Fill in the following
 dimension_ingestion_gcs_dag >> trnsaction_ingestion_gcs_dag >> dbt_run_job  
 After they run successfully, you will observe the following:
 1. New GCS bucket named <your-project-id>-financial_transaction_bucket:  
-  dimension/: user/user.parquet. cards/cards.parquet, mcc/mcc.parquet    
-  trnsction/: trnsction.parquet
-gs://your-bucket-name/  
-│── dimension/  
-│   ├── user/user.parquet 
-│   ├── cards/cards.parquet
-│   ├── mcc/mcc.parquet  
-│── trnsction/
-|   |── trnsction.parquet
+gs://your-bucket-name/    
+│── dimension/    
+│   ├── user/user.parquet   
+│   ├── cards/cards.parquet  
+│   ├── mcc/mcc.parquet    
+│── trnsction/  
+|   |── trnsction.parquet  
 
 
 3. New tables in your GCS BigQuery dataset financial_transaction:
