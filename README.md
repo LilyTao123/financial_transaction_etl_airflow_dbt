@@ -9,12 +9,13 @@ For example, the original dataset includes 'latitude' and 'longitude' coordinate
 # Technology
 
 # ETL Process Design
-Airflow is used to initally ingest and transform data, the ingested data include:
+Airflow is used to initally ingest and initially transform data, the ingested data include:
 1. transaction_data
 2. user_data
 3. cards_data
 
-DBT transform data, and created a table clients_consumption_2019 and online_trsn_over_time to build dashboard.
+DBT combined different dataset, and created a table clients_consumption_2019 and online_trsn_over_time to build dashboard.  
+clients_consumption_2019 is an aggregated view that describes customers consumption in 2019, including how many transaction they made, how much they consumed, and where
 
 # Dats warehouse
 All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded into BigQuery.
