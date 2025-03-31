@@ -11,22 +11,6 @@ from geopy.exc import GeocoderTimedOut
 
 logger = logging.getLogger(__name__)
 
-# Initialize geocoder
-geolocator = Nominatim(user_agent="geo_locator")
-# Function to get state from lat/lon
-def get_location(lat, lon):
-    try:
-        location = geolocator.reverse((lat, lon), language="en")
-        if location and 'address' in location.raw:
-            address = location.raw['address']
-            city = address.get('city', address.get('town', address.get('village', 'Unknown')))
-            state = address.get('state', 'Unknown')
-            return city, state
-    except GeocoderTimedOut:
-        return 'Timeout', 'Timeout'
-    return 'Unknown', 'Unknown'
-
-
 def user_convert_csv_to_parquet(ings_path, trgt_path, schema):
     '''
         :param ings_path: local ingestion path
@@ -59,6 +43,22 @@ def cards_convert_csv_to_parquet(ings_path, trgt_path, schema):
     df['expires'] = pd.to_datetime(df['expires'], format="%m/%Y").dt.strftime("%Y-%m-%d")
     df['acct_open_date'] = df['acct_open_date'].replace(' ', '', regex=True)
     df['acct_open_date'] = pd.to_datetime(df['acct_open_date'], format="%m/%Y").dt.strftime("%Y-%m-%d")
+
+    dtype_mapping = schema
+    df = df.astype(dtype_mapping)
+
+    df.to_parquet(trgt_path, engine="pyarrow",index=False)
+    logger.info(f'Saved file to {trgt_path} with {len(df)} rows')
+
+def mcc_convert_json_to_parquet(ings_path, trgt_path, schema):
+    # Read the JSON file into a dictionary
+    df = pd.read_json(ings_path, typ='series')
+
+    # Convert the Series to a DataFrame
+    df = df.reset_index()
+
+    # Rename the columns
+    df.columns = ['code', 'descript']
 
     dtype_mapping = schema
     df = df.astype(dtype_mapping)

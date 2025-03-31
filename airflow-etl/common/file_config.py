@@ -12,12 +12,28 @@ with open('common/config.yaml', 'r') as f:
 user_url = config['user']['url']
 cards_url = config['cards']['url']
 trsction_url = config['trnsction']['url']
+mcc_url = config['mcc']['url']
 
 ings_file_type = config['ings_file_type']
 trgt_file_type = config['trgt_file_type']
 
 local_path = config['local_path']
 dimension_path = config['dimension_path']
+
+# mcc 
+mcc_ings_file_type = config['mcc']['ings_file_type']
+
+mcc_local_ings_name = f'mcc.{mcc_ings_file_type}'
+mcc_local_trgt_name = f'mcc.{trgt_file_type}'
+mcc_local_path = f'/opt/airflow/{local_path}/{dimension_path}/mcc'
+
+mcc_gcs_prefix = f'{dimension_path}/mcc'
+mcc_local_ings = f'{mcc_local_path}/{mcc_local_ings_name}'
+mcc_local_trgt = f'{mcc_local_path}/{mcc_local_trgt_name}'
+mcc_gcs_trgt = f'{mcc_gcs_prefix}/{mcc_local_trgt_name}'
+
+bq_external_mcc = 'external_mcc'
+bq_mcc = 'mcc'
 
 # user
 user_local_ings_name = f'user.{ings_file_type}'
