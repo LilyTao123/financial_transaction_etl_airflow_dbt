@@ -20,8 +20,9 @@ DBT transform data, and created a table clients_consumption_2019 and online_trsn
 All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded into BigQuery.
 
 # Pre-requisites
-1. git
-2. GCP
+1. Git
+   install git (https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+3. GCP
    create google cloud account
 4. Terraform
    install terraform (https://developer.hashicorp.com/terraform/install?product_intent=terraform)
