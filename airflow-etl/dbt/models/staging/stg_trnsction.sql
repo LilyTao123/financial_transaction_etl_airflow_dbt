@@ -53,7 +53,7 @@ renamed as (
         end as merchant_state ,
         merchant_city,
         zip,
-        mcc,
+        {{ dbt.safe_cast("mcc", api.Column.translate_type("integer")) }}  as mcc,
         case 
             when lower(merchant_city) = 'online' then TRUE 
             else False 

@@ -37,7 +37,7 @@ cards_dtype_mapping = {
 
 mcc_dtype_mapping = {
     'code': 'int32',
-    'description': 'string'
+    'descript': 'string'
 }
 
 trnsction_schema = types.StructType([

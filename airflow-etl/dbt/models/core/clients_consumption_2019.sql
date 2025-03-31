@@ -8,6 +8,7 @@ with trnsction as (
         transaction_amount,
         client_id,
         card_id, 
+        mcc,
         merchant_id,
         merchant_country,
         merchant_state,
@@ -33,9 +34,25 @@ select
     count(CASE WHEN is_online_transaction THEN 1 END) as cnt_of_online_transaction
 from trnsction
 group by transaction_month, client_id, merchant_country, merchant_state, merchant_city
-) 
+), 
+max_trns as (
+    -- Find the transaction with the max amount
+    select 
+        transaction_id,
+        transaction_amount,
+        code,
+        descript,
+        merchant_id,  -- Assuming this is your MCC field or adjust accordingly
+        client_id,
+        transaction_date
+    from trnsction as a
+    left join `careful-compass-455315-b1.financial_transaction_transformed_data.stg_mcc` b
+    on a.mcc = b.code 
+    where transaction_amount = (select max(transaction_amount) from trnsction)
+)
 select 
     agg_trns.*,
+    max_trns.descript as max_trns_descrpt,
     users.country as users_country,
     users.state as users_state,
     users.city as usrs_city,
@@ -44,3 +61,5 @@ select
 from agg_trns
 left join {{ref("stg_user")}} as users
 on agg_trns.client_id = users.client_id
+left join max_trns
+on agg_trns.max_transaction_amount = max_trns.transaction_amount

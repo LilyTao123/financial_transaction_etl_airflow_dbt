@@ -210,8 +210,8 @@ with DAG(
     )
 
 
-create_temp_folder >> [ 
+create_temp_folder >> [
     download_user_dataset >> user_convert_to_parquet >> user_load_to_gcp >> bq_create_user_external_table >> bq_user_table,
     download_cards_dataset >> cards_convert_to_parquet >> cards_load_to_gcp >> bq_create_cards_external_table >> bq_cards_table,
     download_mcc_dataset >> mcc_convert_to_parquet >> mcc_load_to_gcp >> bq_create_mcc_external_table >> bq_mcc_table
-    ] >> job_success
+] >> job_success
