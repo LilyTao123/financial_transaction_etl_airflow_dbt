@@ -66,7 +66,7 @@ AIRFLOW_UID=1001
 Remember you need to copy .env into folder airflow-etl
 
 ## Set up Terraform
-To create needed resources, you need to use terraform.  
+To create the required resources, use Terraform by running the following commands in your terminal:
 
 1. initialise terraform
    ``` terraform init ```
