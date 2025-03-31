@@ -1,0 +1,5 @@
+.ipynb_checkpoints
+airflow-elt/.keys 
+airflow-etl/.env
+.terraform
+.env
