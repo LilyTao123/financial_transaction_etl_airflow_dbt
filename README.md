@@ -117,5 +117,5 @@ Use terraform to destroy resources
 ``` terraform destroy ```
 
 # Data Visualisation
-The link of it is [this](https://lookerstudio.google.com/reporting/5f3042d3-6fa7-48b8-9a3f-a99e3b35a3d7/page/4fgEF/edit)
+The link of dashboard is [here](https://lookerstudio.google.com/reporting/5f3042d3-6fa7-48b8-9a3f-a99e3b35a3d7/page/4fgEF/edit), but you may need to reconnect the data if you want to edit it.
 ![workflow](media/dashboard.png)
