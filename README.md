@@ -107,6 +107,7 @@ gs://your-bucket-name/
   * clients_consumption_2019
   * online_trsn_over_time(which is a view)  
 ## Destroy resources
+Use terraform to destroy resources  
 ``` terraform destroy ```
 
 # Data Visualisation
