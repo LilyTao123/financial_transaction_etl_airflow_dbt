@@ -52,7 +52,7 @@ create a service account: IAM and admin -> service accounts -> click 'service ac
 create credential key under the service account, click 'JSON', and download it, rename as 'google_creds.json'
 
 ### c. rename and save it
-Save and rename the keys under the directory ```airflow-etl```, with the path being /airflow-etl/.keys/google_cloud/google_creds.json.
+Save and rename the keys under the directory ```airflow-etl```, with the path being ```/airflow-etl/.keys/google_cloud/google_creds.json```.
 
 ## Update .env
 ```  
