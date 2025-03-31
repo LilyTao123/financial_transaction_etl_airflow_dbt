@@ -13,12 +13,11 @@ All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded i
 
 Terraform will create three resources: a GCS bucket named 'financial_transaction_bucket', a dataset named 'financial_transaction', and another dataset named 'financial_transaction_transformed_data'.  
 
-Airflow is used for the initial ingestion and transformation of data. The ingested data includes:  
-* transactions
-* users
-* cards
-* mcc  
-All stored in the BigQuery dataset 'financial_transaction'. The transaction table is partitioned by transaction_date.  
+Airflow is used for the initial ingestion and transformation of data. All stored in the BigQuery dataset 'financial_transaction'. The transaction table is partitioned by transaction_date. The ingested data includes:  
+* transactions: financial transaction records.  
+* users: clients information, including age, location, yearly income and etc.  
+* cards: clients cards info, including type of cards, expired date and etc.  
+* mcc： transaction categorization, column 'description' would tell the category of each transaction.  
 
 DBT combines multiple datasets to create the tables, which are stored in BigQuery dataset 'financial_transaction_transformed_data'：  
 * clients_consumption_2019  
