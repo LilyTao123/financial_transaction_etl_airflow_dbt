@@ -19,10 +19,9 @@ Airflow is used for the initial ingestion and transformation of data. All stored
 * cards: clients cards info, including type of cards, expired date and etc.  
 * mcc： transaction categorization, column 'description' would tell the category of each transaction.  
 
-DBT combines multiple datasets to create the tables, which are stored in BigQuery dataset 'financial_transaction_transformed_data'：  
-* clients_consumption_2019  
-* online_trsn_over_time  
-They will be used for dashboard building.
+DBT combines multiple datasets to create the tables, which are stored in BigQuery dataset 'financial_transaction_transformed_data', They will be used for dashboard building.：  
+* clients_consumption_2019 : to describe clients behaviour in 2019  
+* online_trsn_over_time : online transaction amounts and the total number of transactions from 2010 to 2019, enabling an analysis of changes over time.
 
 # Pre-requisites
 1. Git
