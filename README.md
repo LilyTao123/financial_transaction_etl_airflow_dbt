@@ -57,7 +57,10 @@ GCP_BIGQUERY_DATASET=<the dataset you want to create>
    ``` terraform apply```
 
 ## Build airflow image
-``` docker-compose build ```
+copy .env into airflow-etl
+``` 
+cd airflow-etl
+docker-compose build ```
 ``` docker-compose up ```
 
 ## Access to airflow
