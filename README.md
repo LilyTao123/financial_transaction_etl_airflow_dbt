@@ -3,7 +3,8 @@ This project demonstrates a proof of concept for an end-to-end data ingestion pi
 For accuracy, only successful transactions were considered in the analysis, as the dataset also contains fraudulent transactions.
 
 # Data source
-This dataset is sourced from Kaggle, containing transaction data, user information, and card details from 2010 to 2019. To enhance its usability, I imported the dataset into my GitHub repository and re-mapped the state and country columns for better clarity and consistency.
+This dataset is sourced from [Kaggle](https://www.kaggle.com/datasets/computingvictor/transactions-fraud-datasets/data), containing transaction data, user information, and card details from 2010 to 2019. To enhance its usability, I imported the dataset into [my GitHub repository](https://github.com/LilyTao123/financial-transaction-data/tags) and re-mapped the state and country columns for better clarity and consistency.  
+For example, the original dataset includes 'latitude' and 'longitude' coordinates. I have used this data to determine users' locations at the state and city levels, and created a new column.
 
 # Technology
 
@@ -13,7 +14,7 @@ Airflow is used to initally ingest and transform data, the ingested data include
 2. user_data
 3. cards_data
 
-DBT transform data.
+DBT transform data, and created a table clients_consumption_2019 and online_trsn_over_time to build dashboard.
 
 # Dats warehouse
 All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded into BigQuery.
