@@ -28,10 +28,12 @@ They will be used for dashboard building.
 # Pre-requisites
 1. Git
    install git (https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-3. GCP
+2. GCP
    create google cloud account
-4. Terraform
+3. Terraform
    install terraform (https://developer.hashicorp.com/terraform/install?product_intent=terraform)
+4. Docker and docker-compose
+   install docker and docker-compose (https://docs.docker.com/desktop/setup/install/mac-install/)
 
 # To run this project
 ## clone git repository
