@@ -60,8 +60,9 @@ GCP_BIGQUERY_DATASET=<the dataset you want to create>
 copy .env into airflow-etl
 ``` 
 cd airflow-etl
-docker-compose build ```
-``` docker-compose up ```
+docker-compose build
+docker-compose up
+```
 
 ## Access to airflow
 
