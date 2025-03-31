@@ -24,9 +24,9 @@ All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded i
 
 # Get started
 ## clone git repository
-``` git clone  ```
+``` git clone https://github.com/LilyTao123/financial_transaction_etl_airflow_dbt.git ```
 ## Create GCP service account and credential keys
-### a. service account
+### a. create service account
 create a service account: IAM and admin -> service accounts -> click 'service account', and include the below permissions
 ```
   - BigQuery Admin
@@ -36,18 +36,21 @@ create a service account: IAM and admin -> service accounts -> click 'service ac
   - Service Account User
   - Storage Admin
 ``` 
-### b. credential keys
-create credential key under the service account
+### b. create credential keys
+create credential key under the service account, click 'JSON', and download it, rename as 'google_creds.json'
 
 ### c. rename and save it
-save and rename the keys as 'airflow-etl/.keys/google_cloud/google_creds.json'
+save and rename the keys as under airflow-etl, the path of it should be 'airflow-etl/.keys/google_cloud/google_creds.json'
 
 ## Update .env
 ```  
 GCP_PROJECT_ID=<your project id>
 GCP_GCS_BUCKET=<the bucket you want to create>
 GCP_BIGQUERY_DATASET=<the dataset you want to create>
+AIRFLOW_UID=1001
 ```
+
+## copy .env file into airflow-etl
 
 ## Set up Terraform
 1. initialise terraform
