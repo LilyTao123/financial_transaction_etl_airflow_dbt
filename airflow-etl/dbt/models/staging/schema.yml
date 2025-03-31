@@ -2,8 +2,10 @@ version: 2
 
 sources:
   - name: staging
-    database: finance-transaction
-    schema: financial_transaction
+    database: "{{ env_var('GCP_PROJECT_ID') }}"
+    # database: finance-transaction
+    schema: "{{ env_var('GCP_BIGQUERY_DATASET') }}" 
+    # schema: financial_transaction
     tables:
       - name: user
       - name: cards

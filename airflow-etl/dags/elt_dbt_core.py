@@ -4,7 +4,7 @@ from datetime import datetime
 
 # Define the DAG
 with DAG(
-    'dbt_run_example',
+    'dbt_run_job',
     start_date=datetime(2025, 1, 1),
     schedule_interval='@daily',  # You can set your desired schedule
     catchup=False
