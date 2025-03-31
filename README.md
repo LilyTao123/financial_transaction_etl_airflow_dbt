@@ -33,7 +33,7 @@ They will be used for dashboard building.
 4. Terraform
    install terraform (https://developer.hashicorp.com/terraform/install?product_intent=terraform)
 
-# Get started
+# To run this project
 ## clone git repository
 ``` git clone https://github.com/LilyTao123/financial_transaction_etl_airflow_dbt.git ```
 ## Create GCP service account and credential keys
