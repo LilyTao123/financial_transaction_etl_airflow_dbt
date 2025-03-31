@@ -8,13 +8,10 @@ For example, the original dataset includes 'latitude' and 'longitude' coordinate
 
 # Technology
 ![workflow](media/workflows.png)
-# ETL Process Design
-Airflow is used to initally ingest and initially transform data, the ingested data include:
-transaction, user, cards, mcc  
-And table 'transaction' is partitioned by transaction_date  
+# ETL Pipeline Design
+Airflow is used for the initial ingestion and transformation of data. The ingested data includes transactions, users, cards, and mcc, all stored in the BigQuery dataset 'financial_transaction'. The transaction table is partitioned by transaction_date.  
 
-DBT combined different dataset, and created a table clients_consumption_2019 and online_trsn_over_time to build dashboard.  
-clients_consumption_2019 is an aggregated view that describes customers consumption in 2019, including how many transaction they made, how much they consumed, and where
+DBT combines multiple datasets to create the tables 'clients_consumption_2019' and 'online_trsn_over_time', which are used for dashboard building.
 
 # Dats warehouse
 All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded into BigQuery.
@@ -36,7 +33,6 @@ create a service account: IAM and admin -> service accounts -> click 'service ac
 ```
   - BigQuery Admin
   - Compute Admin
-  - Project IAM Admin
   - Service Account Admin
   - Service Account User
   - Storage Admin
@@ -45,7 +41,7 @@ create a service account: IAM and admin -> service accounts -> click 'service ac
 create credential key under the service account, click 'JSON', and download it, rename as 'google_creds.json'
 
 ### c. rename and save it
-save and rename the keys as under airflow-etl, the path of it should be 'airflow-etl/.keys/google_cloud/google_creds.json'
+save and rename the keys as under airflow-etl, the path of it should be '/airflow-etl/.keys/google_cloud/google_creds.json'
 
 ## Update .env
 ```  
