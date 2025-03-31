@@ -6,7 +6,7 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python_operator import PythonOperator
 
-from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator, BigQueryCreateExternalTableOperator
+from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator, BigQueryCreateExternalTableOperator, BigQueryDeleteTableOperator
 from airflow.providers.google.cloud.operators.gcs import GCSListObjectsOperator
 from airflow.providers.google.cloud.sensors.gcs import GCSObjectExistenceSensor
 
@@ -115,4 +115,11 @@ with DAG(
         },
     )
 
-create_temp_folder >> download_trsction_dataset >> trsction_convert_to_parquet >> trsction_load_to_gcp >> bq_create_trsnction_external_table >> bq_partitioned_transaction_records
+    delete_trns_external = BigQueryDeleteTableOperator(
+        task_id="delete_trns_external",
+        deletion_dataset_table= f'{PROJECT_ID}.{DATASET_ID}.{bq_external_trsnction}',
+        ignore_if_missing=True,  # Set to True to avoid failure if the table doesn't exist
+    )
+
+
+create_temp_folder >> download_trsction_dataset >> trsction_convert_to_parquet >> trsction_load_to_gcp >> bq_create_trsnction_external_table >> bq_partitioned_transaction_records >> delete_trns_external

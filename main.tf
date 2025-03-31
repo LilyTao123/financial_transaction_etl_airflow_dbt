@@ -41,6 +41,12 @@ resource "google_bigquery_dataset" "financial_transaction_dataset" {
   delete_contents_on_destroy = true
 }
 
+resource "google_bigquery_dataset" "financial_transaction_dataset_dbt" {
+  dataset_id = "financial_transaction_transformed_data"
+  location   = var.location
+  delete_contents_on_destroy = true
+}
+
 # resource "google_project_service" "cloud_run_api" {
 #   project = local.envs["GCP_PROJECT_ID"]
 #   service = "compute.googleapis.com"

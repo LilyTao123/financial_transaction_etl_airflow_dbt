@@ -3,3 +3,4 @@ airflow-elt/.keys
 airflow-etl/.env
 .terraform
 .env
+airflow-etl/dags/etl_dbt_cloud.py

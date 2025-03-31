@@ -4,3 +4,4 @@ logs
 dags/__pycache__
 common/__pycache__
 .env
+.dbt

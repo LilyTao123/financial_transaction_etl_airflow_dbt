@@ -6,7 +6,7 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python_operator import PythonOperator
 
-from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator, BigQueryCreateExternalTableOperator
+from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator, BigQueryCreateExternalTableOperator, BigQueryDeleteTableOperator
 from airflow.providers.google.cloud.operators.gcs import GCSListObjectsOperator
 
 from airflow.contrib.operators.spark_submit_operator import SparkSubmitOperator
@@ -14,6 +14,7 @@ from airflow.contrib.operators.spark_submit_operator import SparkSubmitOperator
 current_file_path = os.path.abspath(__file__)
 parent_directory = os.path.dirname(os.path.dirname(current_file_path))
 sys.path.append(parent_directory)
+
 
 from common.file_config import *
 from common.schema import *
@@ -204,14 +205,41 @@ with DAG(
         },
     )
 
-    job_success = BashOperator(
-        task_id="job_success",
-        bash_command=f" echo 'job success' "
+
+    delete_cards_external = BigQueryDeleteTableOperator(
+        task_id="delete_cards_external",
+        deletion_dataset_table= f'{PROJECT_ID}.{DATASET_ID}.{bq_external_cards}',
+        ignore_if_missing=True,  # Set to True to avoid failure if the table doesn't exist
     )
 
+    delete_user_external = BigQueryDeleteTableOperator(
+        task_id="delete_user_external",
+        deletion_dataset_table= f'{PROJECT_ID}.{DATASET_ID}.{bq_external_user}',
+        ignore_if_missing=True,  # Set to True to avoid failure if the table doesn't exist
+    )
 
-create_temp_folder >> [
-    download_user_dataset >> user_convert_to_parquet >> user_load_to_gcp >> bq_create_user_external_table >> bq_user_table,
-    download_cards_dataset >> cards_convert_to_parquet >> cards_load_to_gcp >> bq_create_cards_external_table >> bq_cards_table,
-    download_mcc_dataset >> mcc_convert_to_parquet >> mcc_load_to_gcp >> bq_create_mcc_external_table >> bq_mcc_table
-] >> job_success
+    delete_mcc_external = BigQueryDeleteTableOperator(
+        task_id="delete_mcc_external",
+        deletion_dataset_table= f'{PROJECT_ID}.{DATASET_ID}.{bq_external_mcc}',
+        ignore_if_missing=True,  # Set to True to avoid failure if the table doesn't exist
+    )
+
+    # job_success = BashOperator(
+    #     task_id="job_success",
+    #     bash_command=f" echo 'job success' "
+    # )
+
+# Ensure create_temp_folder runs before all downloads
+create_temp_folder >> download_user_dataset
+create_temp_folder >> download_cards_dataset
+create_temp_folder >> download_mcc_dataset
+
+# Dependencies for user dataset processing
+download_user_dataset >> user_convert_to_parquet >> user_load_to_gcp >> bq_create_user_external_table >> bq_user_table >> delete_user_external
+
+# Dependencies for cards dataset processing
+download_cards_dataset >> cards_convert_to_parquet >> cards_load_to_gcp >> bq_create_cards_external_table >> bq_cards_table >> delete_cards_external
+
+# Dependencies for mcc dataset processing
+download_mcc_dataset >> mcc_convert_to_parquet >> mcc_load_to_gcp >> bq_create_mcc_external_table >> bq_mcc_table >> delete_mcc_external
+
