@@ -1,4 +1,4 @@
-# Background
+# Introduction
 This project demonstrates a proof of concept for an end-to-end data ingestion pipeline, leveraging Terraform, Google Cloud Platform (GCP), Apache Airflow, and Docker. It processes financial transaction data from a banking institution, generating a comprehensive dashboard that analyzes customer behavior by comparing 2019 with 2018. It also includes trends in customers' online consumption over time.  
 For accuracy, only successful transactions were considered in the analysis, as the dataset also contains fraudulent transactions.
 
@@ -9,9 +9,19 @@ For example, the original dataset includes 'latitude' and 'longitude' coordinate
 # Technology
 ![workflow](media/workflows.png)
 # ETL Pipeline Design
-Airflow is used for the initial ingestion and transformation of data. The ingested data includes transactions, users, cards, and mcc, all stored in the BigQuery dataset 'financial_transaction'. The transaction table is partitioned by transaction_date.  
+Terraform will create three resources: a GCS bucket named 'financial_transaction_bucket', a dataset named 'financial_transaction', and another dataset named 'financial_transaction_transformed_data'.  
 
-DBT combines multiple datasets to create the tables 'clients_consumption_2019' and 'online_trsn_over_time', which are used for dashboard building.
+Airflow is used for the initial ingestion and transformation of data. The ingested data includes:  
+* transactions
+* users
+* cards
+* mcc
+All stored in the BigQuery dataset 'financial_transaction'. The transaction table is partitioned by transaction_date.  
+
+DBT combines multiple datasets to create the tables：
+* clients_consumption_2019
+* online_trsn_over_time
+They will be used for dashboard building.
 
 # Dats warehouse
 All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded into BigQuery.
