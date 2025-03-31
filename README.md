@@ -22,7 +22,9 @@ All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded i
 # Pre-requisites
 1. git
 2. GCP
-3. Terraform
+   create google cloud account
+4. Terraform
+   install terraform (https://developer.hashicorp.com/terraform/install?product_intent=terraform)
 
 # Get started
 ## clone git repository
@@ -63,7 +65,6 @@ AIRFLOW_UID=1001
    ``` terraform apply```
 
 ## Build airflow image
-copy .env into airflow-etl
 ``` 
 cd airflow-etl
 docker-compose build
