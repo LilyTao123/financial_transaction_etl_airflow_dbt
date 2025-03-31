@@ -75,19 +75,15 @@ open ```http://localhost:8080 ``` in your browser, username and password both ar
 In the top navigation bar, go to Admin > Connections > + > Fill in the following: Connection Id: 'spark-conn' Connection Type: 'spark' Host: 'spark://spark-master' Port: '7077'
 ![airflow_spark_conn](media/spark.png)
 ### Run dags as follow orders
-dimension_ingestion_gcs_dag >> trnsaction_ingestion_gcs_dag >> dbt_run_job
-After it runs successfully, you will observe the following:
+dimension_ingestion_gcs_dag >> trnsaction_ingestion_gcs_dag >> dbt_run_job  
+After they run successfully, you will observe the following:
 1. New GCS bucket named <your-project-id>-financial_transaction_bucket:  
-  user_data.parquet  
-  cards_data.parquet  
-  transaction_data.parquet  
+  dimension: user_data.parquet. cards_data.parquet, mcc.parquet    
+  trnsction: trnsction.parquet   
 2. New tables in your GCS BigQuery dataset financial_transaction:
-  user
-  cards    
-  trnsction
+  user, cards, trnsction
 3. New tables in your GCS BigQuery dataset financial_transaction_transformed_data:
-  clients_consumption_2019  
-  online_trsn_over_time  
+  clients_consumption_2019 , online_trsn_over_time(which is a view)  
 ## Destroy resources
 ``` terraform destroy ```
 
