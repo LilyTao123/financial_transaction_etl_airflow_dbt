@@ -57,8 +57,15 @@ GCP_BIGQUERY_DATASET=<the dataset you want to create>
    ``` terraform apply```
 
 ## Build airflow image
-``` docker-compose build ```
-``` docker-compose up ```
+copy .env into airflow-etl
+``` 
+cd airflow-etl
+docker-compose build
+docker-compose up
+```
 
 ## Access to airflow
+open ```http://localhost:8080 ``` in your browser
+### Add spark connection
+In the top navigation bar, go to Admin > Connections > + > Fill in the following: Connection Id: 'spark-conn' Connection Type: 'spark' Host: 'spark://spark-master' Port: '7077'
 
