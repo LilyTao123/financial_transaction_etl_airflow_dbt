@@ -89,7 +89,7 @@ open ```http://localhost:8080 ``` in your browser, username and password both ar
 In the top navigation bar, go to Admin > Connections > + > Fill in the following: Connection Id: 'spark-conn' Connection Type: 'spark' Host: 'spark://spark-master' Port: '7077'
 ![airflow_spark_conn](media/spark.png)
 ### Run the DAGs in the following order
-To explore airflow dags, you will see 
+You will see this in airflow UI 
 ![workflow](media/airflow_dags.png)
 
 And you need to run them in the following order: dimension_ingestion_gcs_dag >> trnsaction_ingestion_gcs_dag >> dbt_run_job  
