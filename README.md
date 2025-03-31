@@ -9,6 +9,8 @@ For example, the original dataset includes 'latitude' and 'longitude' coordinate
 # Technology
 ![workflow](media/workflows.png)
 # ETL Pipeline Design
+All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded into BigQuery.  
+
 Terraform will create three resources: a GCS bucket named 'financial_transaction_bucket', a dataset named 'financial_transaction', and another dataset named 'financial_transaction_transformed_data'.  
 
 Airflow is used for the initial ingestion and transformation of data. The ingested data includes:  
@@ -18,13 +20,10 @@ Airflow is used for the initial ingestion and transformation of data. The ingest
 * mcc
 All stored in the BigQuery dataset 'financial_transaction'. The transaction table is partitioned by transaction_date.  
 
-DBT combines multiple datasets to create the tables：
+DBT combines multiple datasets to create the tables, which are stored in BigQuery dataset 'financial_transaction_transformed_data'：
 * clients_consumption_2019
 * online_trsn_over_time
 They will be used for dashboard building.
-
-# Dats warehouse
-All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded into BigQuery.
 
 # Pre-requisites
 1. Git
