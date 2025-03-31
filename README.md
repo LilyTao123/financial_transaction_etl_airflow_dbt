@@ -1,5 +1,6 @@
 # Background
-This project demonstrates a proof of concept for an end-to-end data ingestion pipeline, leveraging Terraform, Google Cloud Platform (GCP), Apache Airflow, and Docker. It processes financial transaction data from a banking institution and generates a comprehensive dashboard for analysis.
+This project demonstrates a proof of concept for an end-to-end data ingestion pipeline, leveraging Terraform, Google Cloud Platform (GCP), Apache Airflow, and Docker. It processes financial transaction data from a banking institution, generating a comprehensive dashboard that analyzes customer behavior by comparing 2019 with 2018. It also includes trends in customers' online consumption over time.  
+For accuracy, only successful transactions were considered in the analysis, as the dataset also contains fraudulent transactions.
 
 # Data source
 This dataset is sourced from Kaggle, containing transaction data, user information, and card details from 2010 to 2019. To enhance its usability, I imported the dataset into my GitHub repository and re-mapped the state and country columns for better clarity and consistency.
