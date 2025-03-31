@@ -8,13 +8,10 @@ For example, the original dataset includes 'latitude' and 'longitude' coordinate
 
 # Technology
 ![workflow](media/workflows.png)
-# ETL Process Design
-Airflow is used to initally ingest and initially transform data, the ingested data include:
-transaction, user, cards, mcc  
-And table 'transaction' is partitioned by transaction_date  
+# ETL Pipeline Design
+Airflow is used for the initial ingestion and transformation of data. The ingested data includes transactions, users, cards, and mcc, all stored in the BigQuery dataset 'financial_transaction'. The transaction table is partitioned by transaction_date.  
 
-DBT combined different dataset, and created a table clients_consumption_2019 and online_trsn_over_time to build dashboard.  
-clients_consumption_2019 is an aggregated view that describes customers consumption in 2019, including how many transaction they made, how much they consumed, and where
+DBT combines multiple datasets to create the tables 'clients_consumption_2019' and 'online_trsn_over_time', which are used for dashboard building.
 
 # Dats warehouse
 All processed data is stored in a Google Cloud Storage (GCS) bucket and loaded into BigQuery.
@@ -36,7 +33,6 @@ create a service account: IAM and admin -> service accounts -> click 'service ac
 ```
   - BigQuery Admin
   - Compute Admin
-  - Project IAM Admin
   - Service Account Admin
   - Service Account User
   - Storage Admin
@@ -45,7 +41,7 @@ create a service account: IAM and admin -> service accounts -> click 'service ac
 create credential key under the service account, click 'JSON', and download it, rename as 'google_creds.json'
 
 ### c. rename and save it
-save and rename the keys as under airflow-etl, the path of it should be 'airflow-etl/.keys/google_cloud/google_creds.json'
+save and rename the keys as under airflow-etl, the path of it should be '/airflow-etl/.keys/google_cloud/google_creds.json'
 
 ## Update .env
 ```  
@@ -56,6 +52,7 @@ AIRFLOW_UID=1001
 ```
 
 ## copy .env file into airflow-etl
+Remember you need to copy .env into folder airflow-etl
 
 ## Set up Terraform
 1. initialise terraform
@@ -79,21 +76,18 @@ open ```http://localhost:8080 ``` in your browser, username and password both ar
 In the top navigation bar, go to Admin > Connections > + > Fill in the following: Connection Id: 'spark-conn' Connection Type: 'spark' Host: 'spark://spark-master' Port: '7077'
 ![airflow_spark_conn](media/spark.png)
 ### Run dags as follow orders
-dimension_ingestion_gcs_dag >> trnsaction_ingestion_gcs_dag >> dbt_run_job
-After it runs successfully, you will observe the following:
+dimension_ingestion_gcs_dag >> trnsaction_ingestion_gcs_dag >> dbt_run_job  
+After they run successfully, you will observe the following:
 1. New GCS bucket named <your-project-id>-financial_transaction_bucket:  
-  user_data.parquet  
-  cards_data.parquet  
-  transaction_data.parquet  
+  dimension/: user/user.parquet. cards/cards.parquet, mcc/mcc.parquet    
+  trnsction/: trnsction.parquet   
 2. New tables in your GCS BigQuery dataset financial_transaction:
-  user
-  cards    
-  trnsction
+  user, cards, trnsction, mcc  
 3. New tables in your GCS BigQuery dataset financial_transaction_transformed_data:
-  clients_consumption_2019  
-  online_trsn_over_time  
+  clients_consumption_2019 , online_trsn_over_time(which is a view)  
 ## Destroy resources
 ``` terraform destroy ```
 
 # Data Visualisation
-
+The link of it is [this](https://lookerstudio.google.com/reporting/5f3042d3-6fa7-48b8-9a3f-a99e3b35a3d7/page/4fgEF/edit)
+![workflow](media/dashboard.png)
