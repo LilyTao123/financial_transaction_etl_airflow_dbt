@@ -22,3 +22,9 @@ create_cards_table_query = f"""
     AS
     SELECT * FROM {PROJECT_ID}.{DATASET_ID}.{bq_external_cards};
 """ 
+
+create_mcc_table_query = f""" 
+    CREATE OR REPLACE TABLE {PROJECT_ID}.{DATASET_ID}.{bq_mcc} 
+    AS
+    SELECT * FROM {PROJECT_ID}.{DATASET_ID}.{bq_external_mcc};
+""" 

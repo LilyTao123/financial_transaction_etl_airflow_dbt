@@ -35,6 +35,11 @@ cards_dtype_mapping = {
     'card_on_dark_web': 'string'
 }
 
+mcc_dtype_mapping = {
+    'code': 'int32',
+    'description': 'string'
+}
+
 trnsction_schema = types.StructType([
             types.StructField('id', types.IntegerType(), True), 
             types.StructField('date', types.StringType(), True), 

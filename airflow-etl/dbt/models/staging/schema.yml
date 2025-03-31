@@ -10,8 +10,12 @@ sources:
       - name: user
       - name: cards
       - name: trnsction
+      - name: mcc 
 
 models:
+  - name: stg_mcc
+    description: ""
+
   - name: stg_trnsction
     description: ""
     columns:
