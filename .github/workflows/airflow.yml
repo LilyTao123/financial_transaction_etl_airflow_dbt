@@ -3,10 +3,14 @@ name: Airflow CI/CD
 on:
   push:
     branches:
-      - main  # Runs on push to main branch
+      - main
+    paths:
+      - 'airflow-etc/**'
   pull_request:
     branches:
-      - main  # Runs on PRs to main branch
+      - main
+    paths:
+      - 'airflow-etc/**'
 
 jobs:
   test-dags:
