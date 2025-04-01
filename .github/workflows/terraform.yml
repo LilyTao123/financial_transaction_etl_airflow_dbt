@@ -58,6 +58,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
+    env:
+      TF_VAR_GCP_PROJECT_ID: ${{ secrets.TF_VAR_GCP_PROJECT_ID }}
+      TF_VAR_GCP_GCS_BUCKET: ${{ secrets.TF_VAR_GCP_GCS_BUCKET }}
+      TF_VAR_GCP_BIGQUERY_DATASET: ${{ secrets.TF_VAR_GCP_BIGQUERY_DATASET }}
+
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
