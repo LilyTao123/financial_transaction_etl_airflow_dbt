@@ -123,3 +123,10 @@ Use terraform to destroy resources
 # Data Visualisation
 The link of dashboard is [here](https://lookerstudio.google.com/reporting/5f3042d3-6fa7-48b8-9a3f-a99e3b35a3d7/page/4fgEF/edit), but you may need to reconnect the data if you want to edit it.
 ![workflow](media/dashboard.png)
+
+# CI/CD
+This project includes 2 ci/cd:  
+Airflow CI/CD：it would test dags integrity, including if there are missing task_id, duplicated task_id, duplicated dag_id, import error and so on.
+![airflow cicd](media/airflowcicd.png)
+Terraform CI/CD: only triggered if main.tf and variable.tf get edited.
+
