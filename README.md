@@ -79,6 +79,12 @@ cd airflow-etl
 docker-compose build
 docker-compose up
 ```
+or 
+```
+cd airflow-etl
+docker-compose up --build
+```
+
 
 ## Access to airflow
 open ```http://localhost:8080 ``` in your browser, username and password both are 'airflow'
