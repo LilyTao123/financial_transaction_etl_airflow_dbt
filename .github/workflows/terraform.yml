@@ -89,6 +89,10 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
+      env:
+        TF_VAR_GCP_PROJECT_ID: ${{ secrets.TF_VAR_GCP_PROJECT_ID }}
+        TF_VAR_GCP_GCS_BUCKET: ${{ secrets.TF_VAR_GCP_GCS_BUCKET }}
+        TF_VAR_GCP_BIGQUERY_DATASET: ${{ secrets.TF_VAR_GCP_BIGQUERY_DATASET }}
       run: terraform plan -input=false
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
