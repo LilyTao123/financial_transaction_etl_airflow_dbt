@@ -46,8 +46,13 @@ name: 'Terraform'
 
 on:
   push:
-    branches: [ "main" ]
+    paths:
+      - 'main.tf'  # Only trigger when main.tf is changed
+      - 'variables.tf'
   pull_request:
+    paths:
+      - 'main.tf'
+      - 'variables.tf'
 
 permissions:
   contents: read
