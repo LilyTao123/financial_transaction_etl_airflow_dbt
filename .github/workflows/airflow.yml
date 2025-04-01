@@ -26,11 +26,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install apache-airflow
-          pip install -r requirements.txt
+          pip install -r airflow-etc/requirements.txt
 
-      - name: Validate DAGs
+      - name: Run DAG Tests
         run: |
-          python -c "from airflow.models import DagBag; dag_bag = DagBag(); assert not dag_bag.import_errors"
+          pytest airflow-etc/tests/dags/test.py  # Run DAG tests
 
   deploy-dags:
     name: Deploy DAGs to Airflow
