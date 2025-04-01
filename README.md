@@ -34,10 +34,10 @@ DBT combines multiple datasets to create the tables, which are stored in BigQuer
    install docker and docker-compose (https://docs.docker.com/desktop/setup/install/mac-install/)
 
 # To run this project
-## clone git repository
+## a. Clone git repository
 ``` git clone https://github.com/LilyTao123/financial_transaction_etl_airflow_dbt.git ```
-## Create GCP service account and credential keys
-### a. create service account
+## b. Create GCP service account and credential keys
+### b.1 create service account
 create a service account: IAM and admin -> service accounts -> click 'service account', and include the below permissions
 ```
   - BigQuery Admin
@@ -46,13 +46,13 @@ create a service account: IAM and admin -> service accounts -> click 'service ac
   - Service Account User
   - Storage Admin
 ``` 
-### b. create credential keys
+### b.2 create credential keys
 create credential key under the service account, click 'JSON', and download it, rename as 'google_creds.json'
 
-### c. rename and save it
+### b.3 rename and save it
 Save and rename the keys under the directory ```airflow-etl```, with the path being ```/airflow-etl/.keys/google_cloud/google_creds.json```.
 
-## Update .env
+## c. Update .env
 ```  
 GCP_PROJECT_ID=<your project id>
 GCP_GCS_BUCKET=financial_transaction_bucket
@@ -60,10 +60,10 @@ GCP_BIGQUERY_DATASET=financial_transaction
 AIRFLOW_UID=1001
 ```
 
-## copy .env file into airflow-etl
+## d. Copy .env file into airflow-etl
 Remember you need to copy .env into folder airflow-etl
 
-## Set up Terraform
+## e. Set up Terraform
 To create the required resources, use Terraform by running the following commands in your terminal:
 
 1. initialise terraform
@@ -73,7 +73,7 @@ To create the required resources, use Terraform by running the following command
 3. create resources
    ``` terraform apply```
 
-## Build airflow image
+## f. Build airflow image
 ``` 
 cd airflow-etl
 docker-compose build
@@ -86,13 +86,13 @@ docker-compose up --build
 ```
 
 
-## Access to airflow
+## g. Access to airflow
 open ```http://localhost:8080 ``` in your browser, username and password both are 'airflow'
 ![airflow log in](media/airflowlogin.png)
-### Add spark connection
+### g.1 Add spark connection
 In the top navigation bar, go to Admin > Connections > + > Fill in the following: Connection Id: 'spark-conn' Connection Type: 'spark' Host: 'spark://spark-master' Port: '7077'
 ![airflow_spark_conn](media/spark.png)
-### Run the DAGs in the following order
+### g.2 Run the DAGs in the following order
 You will see this in airflow UI 
 ![workflow](media/airflow_dags.png)
 
@@ -116,7 +116,7 @@ gs://your-bucket-name/
 4. New tables in your GCS BigQuery dataset financial_transaction_transformed_data:
   * clients_consumption_2019
   * online_trsn_over_time(which is a view)  
-## Destroy resources
+## h. Destroy resources
 Use terraform to destroy resources  
 ``` terraform destroy ```
 
