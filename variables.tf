@@ -1,3 +1,20 @@
+variable "GCP_PROJECT_ID" {
+  description = "GCP Project ID"
+  type        = string
+}
+
+variable "GCP_GCS_BUCKET" {
+  description = "GCS Bucket Name"
+  type        = string
+}
+
+variable "GCP_BIGQUERY_DATASET" {
+  description = "BigQuery Dataset"
+  type        = string
+}
+
+
+
 variable "credentials" {
   description = "My Credentials"
   default     = "./airflow-etl/.keys/google_cloud/google_creds.json"
