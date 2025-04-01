@@ -4,12 +4,14 @@ import sys
 
 from airflow import DAG
 from airflow.operators.bash import BashOperator
-from airflow.operators.python_operator import PythonOperator
+# from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python import PythonOperator
 
 from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator, BigQueryCreateExternalTableOperator, BigQueryDeleteTableOperator
 from airflow.providers.google.cloud.operators.gcs import GCSListObjectsOperator
 
-from airflow.contrib.operators.spark_submit_operator import SparkSubmitOperator
+# from airflow.contrib.operators.spark_submit_operator import SparkSubmitOperator
+from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
 
 current_file_path = os.path.abspath(__file__)
 parent_directory = os.path.dirname(os.path.dirname(current_file_path))
@@ -36,7 +38,7 @@ default_args = {
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 with DAG(
     dag_id="dimension_ingestion_gcs_dag",
-    schedule_interval="@once",
+    schedule="@once",
     default_args=default_args,
     catchup=False,
     max_active_runs=1,

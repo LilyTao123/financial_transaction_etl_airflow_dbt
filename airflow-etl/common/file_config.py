@@ -5,8 +5,17 @@ import yaml
 
 import pytest
 
-with open('common/config.yaml', 'r') as f:
-    config = yaml.safe_load(f)
+# Get the directory of the current file (file_config.py)
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the absolute path to config.yaml
+CONFIG_PATH = os.path.join(CURRENT_DIR, "config.yaml")
+
+# with open('common/config.yaml', 'r') as f:
+#     config = yaml.safe_load(f)
+
+with open(CONFIG_PATH, 'r') as f:
+     config = yaml.safe_load(f)
 
 # Data ingest setting
 user_url = config['user']['url']

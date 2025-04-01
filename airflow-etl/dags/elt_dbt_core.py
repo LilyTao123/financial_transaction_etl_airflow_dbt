@@ -6,8 +6,9 @@ from datetime import datetime
 with DAG(
     'dbt_run_job',
     start_date=datetime(2025, 1, 1),
-    schedule_interval='@daily',  # You can set your desired schedule
-    catchup=False
+    schedule='@once',  # You can set your desired schedule
+    catchup=False,
+    tags=['dbt-core'],
 ) as dag:
     
     # DBT install packages

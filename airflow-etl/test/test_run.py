@@ -18,7 +18,7 @@ TEST_TASK_ID = "trsction_load_to_gcp"
 def dag():
     with DAG(
         dag_id=TEST_DAG_ID,
-        schedule="@daily",
+        schedule="@once",
         start_date=DATA_INTERVAL_START,
     ) as dag:
         MyCustomOperator(
