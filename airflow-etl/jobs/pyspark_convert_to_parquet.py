@@ -34,8 +34,8 @@ trsction = trsction.fillna({'errors': 'unknown',
 
 # redefine column date as date format
 trsction = trsction.withColumn("amount", regexp_replace("amount", "\\$", "")) \
-                   .withColumn("transaction_date", to_timestamp(col("date"), "yyyy-MM-dd HH:mm:ss")) \
-                   .withColumnRenamed('date', 'transaction_time')
+                   .withColumn("transaction_time", to_timestamp(col("date"), "yyyy-MM-dd HH:mm:ss")) \
+
 
 logger.info(f'{trsction.columns}')
 

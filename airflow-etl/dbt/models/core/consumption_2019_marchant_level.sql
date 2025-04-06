@@ -53,6 +53,8 @@ max_trns as (
 select 
     agg_trns.*,
     max_trns.descript as max_trns_descrpt,
+    users.per_capita_income,
+    users.yearly_income,
     users.country as users_country,
     users.state as users_state,
     users.city as usrs_city,
