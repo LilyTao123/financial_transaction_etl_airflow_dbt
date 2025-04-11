@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'airflow-etc/**'
+      - 'airflow-etl/**'
   pull_request:
     branches:
       - main
