@@ -91,11 +91,11 @@ with DAG(
         },
     )
 
-    bq_mcc_table = BigQueryInsertJobOperator(
-        task_id='bq_mcc_table',
+    bq_merge_to_mcc_table = BigQueryInsertJobOperator(
+        task_id='merge_to_mcc_table',
         configuration={
             'query': {
-                'query': create_mcc_table_query,
+                'query': merge_to_mcc_table,
                 'useLegacySql': False,
             }
         },
@@ -144,11 +144,11 @@ with DAG(
     )
 
 
-    bq_user_table = BigQueryInsertJobOperator(
-        task_id='bq_user_table',
+    bq_merge_user_table = BigQueryInsertJobOperator(
+        task_id='merge_user_table_query',
         configuration={
             'query': {
-                'query': create_user_table_query,
+                'query': merge_user_table_query,
                 'useLegacySql': False,
             }
         },
@@ -197,11 +197,11 @@ with DAG(
 
     )
 
-    bq_cards_table = BigQueryInsertJobOperator(
-        task_id='bq_cards_table',
+    bq_merge_cards_table = BigQueryInsertJobOperator(
+        task_id='bq_merge_cards_table',
         configuration={
             'query': {
-                'query': create_cards_table_query,
+                'query': merge_cards_table_query,
                 'useLegacySql': False,
             }
         },
@@ -237,11 +237,11 @@ create_temp_folder >> download_cards_dataset
 create_temp_folder >> download_mcc_dataset
 
 # Dependencies for user dataset processing
-download_user_dataset >> user_convert_to_parquet >> user_load_to_gcp >> bq_create_user_external_table >> bq_user_table >> delete_user_external
+download_user_dataset >> user_convert_to_parquet >> user_load_to_gcp >> bq_create_user_external_table >> bq_merge_user_table >> delete_user_external
 
 # Dependencies for cards dataset processing
-download_cards_dataset >> cards_convert_to_parquet >> cards_load_to_gcp >> bq_create_cards_external_table >> bq_cards_table >> delete_cards_external
+download_cards_dataset >> cards_convert_to_parquet >> cards_load_to_gcp >> bq_create_cards_external_table >> bq_merge_cards_table >> delete_cards_external
 
 # Dependencies for mcc dataset processing
-download_mcc_dataset >> mcc_convert_to_parquet >> mcc_load_to_gcp >> bq_create_mcc_external_table >> bq_mcc_table >> delete_mcc_external
+download_mcc_dataset >> mcc_convert_to_parquet >> mcc_load_to_gcp >> bq_create_mcc_external_table >> bq_merge_to_mcc_table >> delete_mcc_external
 

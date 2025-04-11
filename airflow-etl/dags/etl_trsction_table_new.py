@@ -79,59 +79,48 @@ with DAG(
         },
     )
 
-    # bq_create_main_trnsction_table = BigQueryInsertJobOperator(
-    #     task_id="bq_create_main_trnsction_table",
-    #     configuration={
-    #         'query': {
-    #             'query': create_main_trnsction_table,
-    #             'useLegacySql': False,
-    #         }
-    #     },
-    # )
-
-    # bq_create_stg_trnsction_table = BigQueryInsertJobOperator(
-    #     task_id="bq_create_stg_trnsction_table",
-    #     configuration={
-    #         'query': {
-    #             'query': create_stg_transaction_table_query,
-    #             'useLegacySql': False,
-    #         }
-    #     },
-    # )
     
-    # bq_create_trsnction_external_table = BigQueryCreateExternalTableOperator(
-    #     task_id='create_external_transaction_table',
-    #     table_resource={
-    #         'tableReference': {
-    #             'projectId': PROJECT_ID,
-    #             'datasetId': DATASET_ID,
-    #             'tableId': bq_external_trsnction,
-    #         },
-    #         'externalDataConfiguration': {
-    #             'autodetect': True,
-    #             'sourceFormat': 'PARQUET',
-    #             'sourceUris': [f'gs://{BUCKET}/{trnsction_gcs_prefix}/*.parquet'],
-    #         },
-    #     },
-    # )
+    bq_create_trsnction_external_table = BigQueryCreateExternalTableOperator(
+        task_id='create_external_transaction_table',
+        table_resource={
+            'tableReference': {
+                'projectId': PROJECT_ID,
+                'datasetId': DATASET_ID,
+                'tableId': bq_external_trsnction,
+            },
+            'externalDataConfiguration': {
+                'autodetect': True,
+                'sourceFormat': 'PARQUET',
+                'sourceUris': [f'gs://{BUCKET}/{trnsction_gcs_prefix}/*.parquet'],
+            },
+        },
+    )
 
-    # bq_merge_partitioned_transaction_table_query = BigQueryInsertJobOperator(
-    #     task_id='merge_partitioned_transaction_table_query',
-    #     configuration={
-    #         'query': {
-    #             'query': merge_partitioned_transaction_table_query,
-    #             'useLegacySql': False,
-    #         }
-    #     },
-    # )
+    bq_create_stg_trnsction_table = BigQueryInsertJobOperator(
+        task_id="bq_create_stg_trnsction_table",
+        configuration={
+            'query': {
+                'query': create_stg_transaction_table_query,
+                'useLegacySql': False,
+            }
+        },
+    )
 
-    # delete_trns_external = BigQueryDeleteTableOperator(
-    #     task_id="delete_trns_external",
-    #     deletion_dataset_table= f'{PROJECT_ID}.{DATASET_ID}.{bq_external_trsnction}',
-    #     ignore_if_missing=True,  # Set to True to avoid failure if the table doesn't exist
-    # )
+    bq_merge_partitioned_transaction_table_query = BigQueryInsertJobOperator(
+        task_id='merge_partitioned_transaction_table_query',
+        configuration={
+            'query': {
+                'query': merge_partitioned_transaction_table_query,
+                'useLegacySql': False,
+            }
+        },
+    )
+
+    delete_trns_external = BigQueryDeleteTableOperator(
+        task_id="delete_trns_external",
+        deletion_dataset_table= f'{PROJECT_ID}.{DATASET_ID}.{bq_external_trsnction}',
+        ignore_if_missing=True,  # Set to True to avoid failure if the table doesn't exist
+    )
 
 
-create_temp_folder >> download_trsction_dataset >> trsction_convert_to_parquet >> trsction_load_to_gcp 
-
-# bq_create_main_trnsction_table >> bq_create_stg_trnsction_table >> bq_create_trsnction_external_table >> merge_partitioned_transaction_table_query >> delete_trns_externa
+create_temp_folder >> download_trsction_dataset >> trsction_convert_to_parquet >> trsction_load_to_gcp  >> bq_create_trsnction_external_table >> bq_create_stg_trnsction_table >> bq_merge_partitioned_transaction_table_query >> delete_trns_external

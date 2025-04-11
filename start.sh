@@ -1,4 +1,4 @@
-# 1. Create a folyesr named uk_power_analytics
+# 1. Create a folyesr named finance_transaction
 sudo mkdir -p finance_transaction
 
 # 2. Install Git and Docker Compose
