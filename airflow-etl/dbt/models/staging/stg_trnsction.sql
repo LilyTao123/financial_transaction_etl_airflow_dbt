@@ -27,10 +27,11 @@ source as (
 renamed as (
 
     select
-        {{ dbt_utils.generate_surrogate_key(['transaction_date', 'client_id', 'card_id', 'amount', 'merchant_id']) }} as unique_transaction_id,
+        {{ dbt_utils.generate_surrogate_key(['transaction_time', 'client_id', 'card_id', 'amount', 'merchant_id']) }} as unique_transaction_id,
         {{ dbt.safe_cast("id", api.Column.translate_type("integer")) }} as transaction_id,
         transaction_time,
-        cast(transaction_date as date) as transaction_date,
+        EXTRACT(YEAR FROM transaction_time) as transaction_year,
+        cast(transaction_time as date) as transaction_date,
         {{ dbt.safe_cast("client_id", api.Column.translate_type("integer")) }} as client_id,
         {{ dbt.safe_cast("card_id", api.Column.translate_type("integer")) }} as card_id,
         cast(amount as numeric) as transaction_amount,
