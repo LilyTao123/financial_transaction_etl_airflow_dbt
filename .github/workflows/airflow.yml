@@ -10,7 +10,7 @@ on:
     branches:
       - main
     paths:
-      - 'airflow-etc/**'
+      - 'airflow-etl/**'
 
 jobs:
   test-dags:
