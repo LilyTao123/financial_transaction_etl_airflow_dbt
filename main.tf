@@ -7,9 +7,20 @@ terraform {
   }
 }
 
+
 locals {
-  envs = { for tuple in regexall("(.*)=(.*)", file(".env")) : tuple[0] => sensitive(tuple[1]) }
+  env_file_exists = fileexists(".env") # Check if .env exists
+
+  envs = local.env_file_exists ? merge(
+    { for tuple in regexall("(.*)=(.*)", file(".env")) : tuple[0] => sensitive(tuple[1]) }
+    ) : merge({
+      GCP_PROJECT_ID       = sensitive(var.GCP_PROJECT_ID)
+      GCP_GCS_BUCKET       = sensitive(var.GCP_GCS_BUCKET)
+      GCP_BIGQUERY_DATASET = sensitive(var.GCP_BIGQUERY_DATASET)
+  })
 }
+
+
 
 provider "google" {
   credentials = file(var.credentials)
